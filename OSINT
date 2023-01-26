@@ -1,0 +1,23 @@
+import requests
+from bs4 import BeautifulSoup
+
+
+def check_hacked_account(email):
+    # Define the intelx.io search URL
+    url = f"https://intelx.io/?q={email}"
+
+    # Send a GET request to the search URL
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'html.parser')
+
+    # Check if the account has been hacked
+    hacked_status = soup.find("div", class_="hacked-status")
+    if hacked_status:
+        print(f"{email} has been hacked.")
+    else:
+        print(f"{email} has not been hacked.")
+
+
+# Example usage
+email = "example@email.com"
+check_hacked_account(email)
